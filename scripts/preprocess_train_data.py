@@ -26,8 +26,8 @@ with open('../imagenet_labels/mapping.txt') as f:
 
 imagedir_in = '/local/filespace-2/fh295/DATA/train'
 tar_filenames = [code for code in os.listdir(imagedir_in) if \
-                 code.startswith('n') and\
-                 not code.isalpha() and not code.endswith('JPEG')]
+                 code.startswith('n') and code.endswith('tar') \
+                 and code.split('.')[0] in mappings]
 
 print 'total of %s tar files in the directory' % (len(tar_filenames))
 
@@ -39,13 +39,17 @@ for i,f in enumerate(tar_filenames):
     print 'extracted %s tar files' % (i)
     os.remove(full_f)
 
-img_filenames = [f for f in os.listdir(imagedir_in) if f.endswith('JPEG')]
+
+img_filenames = [f for f in os.listdir(imagedir_in) if \
+                 f.endswith('JPEG')  and f.split('_')[0] in mappings]
 class_image_dict = defaultdict(list)
+pdb.set_trace()
 
 # fill class image dict
 for img in img_filenames:
     cls = img.split('_')[0]
     class_image_dict[mappings[cls]].append(img)
+
 
 min_class_size = 1000 #  min([len(imgs) for cls,imgs in class_image_dict.iteritems()]) 
 print 'min class size of training set is %s' % (min_class_size)

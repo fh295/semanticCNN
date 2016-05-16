@@ -52,6 +52,11 @@ local initcheck = argcheck{
     type="boolean",
     help="Verbose mode during initialization",
     default = false},
+   
+       {name="neg_samples",
+    type="number",
+    help="number of negative samples"
+   },
 
    {name="loadSize",
     type="table",

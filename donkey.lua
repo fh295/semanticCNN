@@ -76,13 +76,13 @@ if paths.filep(trainCache) then
    print('Loading train metadata from cache')
    trainLoader = torch.load(trainCache)
    trainLoader.sampleHookTrain = trainHook
-   assert(trainLoader.paths[1] == paths.concat(opt.data, 'val'),
+   assert(trainLoader.paths[1] == paths.concat(opt.data, 'train'),
           'cached files dont have the same path as opt.data. Remove your cached files at: '
              .. trainCache .. ' and rerun the program')
 else
    print('Creating train metadata')
    trainLoader = dataLoader{
-      paths = {paths.concat(opt.data, 'val')}, --train
+      paths = {paths.concat(opt.data, 'train')}, --train
       loadSize = loadSize,
       sampleSize = sampleSize,
       split = 100,
@@ -135,19 +135,20 @@ if paths.filep(testCache) then
    print('Loading test metadata from cache')
    testLoader = torch.load(testCache)
    testLoader.sampleHookTest = testHook
-   assert(testLoader.paths[1] == paths.concat(opt.data, 'test-small'),
+   assert(testLoader.paths[1] == paths.concat(opt.data, 'train'),
           'cached files dont have the same path as opt.data. Remove your cached files at: '
              .. testCache .. ' and rerun the program')
 else
    print('Creating test metadata')
    testLoader = dataLoader{
-      paths = {paths.concat(opt.data, 'test-small')},
+      paths = {paths.concat(opt.data, 'train')},
       loadSize = loadSize,
       sampleSize = sampleSize,
       split = 0,
       verbose = true,
       forceClasses = classes_map, -- force consistent class indices between trainLoader and testLoader
       wvectors = opt.wvectors,
+      neg_samples = 0,
    }
    torch.save(testCache, testLoader)
    testLoader.sampleHookTest = testHook

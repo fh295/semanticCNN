@@ -21,7 +21,7 @@ function M.parse(arg)
     cmd:option('-modelPath','','Load model to do eval')
     cmd:option('-class_map','./imagenet/checkpoint/MODELS_CLASS/classes.t7')
     cmd:option('-manualSeed',         2, 'Manually set RNG seed')
-    cmd:option('-GPU',                2, 'Default preferred GPU')
+    cmd:option('-GPU',                4, 'Default preferred GPU')
     cmd:option('-nGPU',               1, 'Number of GPUs to use by default')
     cmd:option('-backend',     'nn', 'Options: cudnn | nn')
     ------------- Data options ------------------------

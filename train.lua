@@ -21,22 +21,34 @@ local w2v
 
 if opt.crit == 'sem' or opt.crit == 'mse' or opt.crit == 'softsem' then
       dummy = dataLoader{
-      paths = {paths.concat(opt.data, 'val')}, --train
+      paths = {paths.concat(opt.data, 'train')}, --train
       loadSize = {3, opt.imageSize, opt.imageSize}, --doesn't really matter
       sampleSize = {3, opt.cropSize, opt.cropSize},  -- doesn't really matter
       split = 100,
       verbose = true,
       wvectors = opt.wvectors,
+      neg_samples = opt.neg_samples,
    } 
   w2v = dummy:get_w2v()
 end
 
+print(#w2v.w2v.w2vvocab)
+local counter=0
+for i,v in pairs(w2v.w2v.w2vvocab) do
+print(i) print(v)
+counter = counter + 1
+end
+print('next number is the count')
+print(counter)
+
+
 if opt.crit == 'softsem' then
-    local class_labels = torch.load('classes.t7')
+    local class_labels = torch.load(paths.concat(opt.save, 'classes.t7'))
     semantic_array = torch.Tensor(nClasses, opt.wvectors_dim)
 
     --fill up semantic array
-    for i,c in ipairs(class_labels) do      
+    for i,c in ipairs(class_labels) do
+        print(c) 
         local vector = w2v:getWordVector(c)
         semantic_array[i] = vector:clone()
     end

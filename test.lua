@@ -17,12 +17,13 @@ local timer = torch.Timer()
 
 if opt.crit == 'sem' or 'mse' then
       dummy = dataLoader{
-      paths = {paths.concat(opt.data, 'test-small')}, --train
+      paths = {paths.concat(opt.data, 'val')}, --train
       loadSize = {3, opt.imageSize, opt.imageSize}, --doesn't really matter
       sampleSize = {3, opt.cropSize, opt.cropSize},  -- doesn't really matter
       split = 100,
       verbose = true,
       wvectors = opt.wvectors,
+      neg_samples = 0,
    }
   w2v = dummy:get_w2v()
 end

@@ -70,14 +70,14 @@ end
 
 function Word2vec:getVector(label)
 	local ind  = self.w2v.w2vvocab[self.classes[label]]
-	return self.w2v.M[ind]
-       
+	return self.w2v.M[ind]       
 end
 
 function Word2vec:getWordVector(label)
+        print(label)
         local ind  = self.w2v.w2vvocab[label]
+        print(ind)
         return self.w2v.M[ind]
-
 end
 
 function Word2vec:eval_ranking(predictions, labels, classes, k, neg_samples)

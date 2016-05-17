@@ -135,13 +135,13 @@ if paths.filep(testCache) then
    print('Loading test metadata from cache')
    testLoader = torch.load(testCache)
    testLoader.sampleHookTest = testHook
-   assert(testLoader.paths[1] == paths.concat(opt.data, 'train'),
+   assert(testLoader.paths[1] == paths.concat(opt.data, 'val'),
           'cached files dont have the same path as opt.data. Remove your cached files at: '
              .. testCache .. ' and rerun the program')
 else
    print('Creating test metadata')
    testLoader = dataLoader{
-      paths = {paths.concat(opt.data, 'train')},
+      paths = {paths.concat(opt.data, 'val')},
       loadSize = loadSize,
       sampleSize = sampleSize,
       split = 0,
